@@ -19,11 +19,15 @@ def register_view(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         cpassword = request.POST.get('cpassword')
+        # print(f'{username=}, {password=}, {email=}, {cpassword=}')
         if password == cpassword:
-            user = User(username=username, email=email)
-            user.set_password(password)
-            user.seve()
-            return redirect('login')
+            try:
+                user = User(username=username, email=email)
+                user.set_password(password)
+                user.save()
+                return redirect('login')
+            except:
+                pass
     return render(request, 'register.html')
         
 def logout_view(request):
